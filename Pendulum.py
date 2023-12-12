@@ -13,8 +13,9 @@ total_rewards = []
 print("Action Space:", env.action_space)
 # 상태 공간 출력
 print("Observation Space:", env.observation_space)
-epoch = 10
-iter = 1000
+epoch = 100
+iter = 10
+
 for i_episode in range(epoch):
     print(i_episode)
     # 환경 초기화

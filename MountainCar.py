@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 환경 생성
-env = gym.make("MountainCar-v0")
+env = gym.make("MountainCar-v0", render_mode="human")
 
 # Q-value 초기화
 num_states = 40  # 위치와 속도에 대한 상태를 이산화
@@ -16,23 +16,23 @@ discount_factor = 0.99
 epsilon = 0.1
 num_episodes = 10000
 
-# 이산화 함수
+
 def discretize_state(state):
     position, velocity = state
     discrete_position = int((position + 1.2) / 1.8 * num_states)
     discrete_velocity = int((velocity + 0.07) / 0.14 * num_states)
     return discrete_position, discrete_velocity
 
-# 탐험 또는 활용을 기반으로 행동 선택
+
 def select_action(state):
     if np.random.rand() < epsilon:
-        return np.random.choice(num_actions)  # 무작위 탐험
+        return np.random.choice(num_actions)
     else:
         return np.argmax(q_table[state])
 
 # Q-learning 알고리즘
 for episode in range(num_episodes):
-    state = discretize_state(env.reset()[0])  # 수정된 부분
+    state = discretize_state(env.reset()[0])
 
     total_reward = 0
 
@@ -58,6 +58,9 @@ for episode in range(num_episodes):
 
     if episode % 100 == 0:
         print(f"Episode: {episode}, Total Reward: {total_reward}")
+    
+    # 렌더링
+    env.render()
 
 # 학습된 정책 평가
 total_rewards = []
